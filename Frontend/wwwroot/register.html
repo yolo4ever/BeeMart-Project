@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeeMart Register</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <h2 class="auth-title">Register Akun</h2>
+
+      <form id="registerForm" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label class="form-label" for="regUsername">Username</label>
+          <input type="text" id="regUsername" class="form-input" placeholder="Masukkan username" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="regFullName">Full Name</label>
+          <input type="text" id="regFullName" class="form-input" placeholder="Masukkan nama lengkap" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="regPassword">Password</label>
+          <input type="password" id="regPassword" class="form-input" placeholder="Masukkan password" required autocomplete="new-password">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="regRePassword">Re-Password</label>
+          <input type="password" id="regRePassword" class="form-input" placeholder="Ulangi password" required autocomplete="new-password">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="regRole">Role</label>
+          <select id="regRole" class="form-select" required>
+            <option value="Cashier" selected>Kasir</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
+
+        <button type="submit" id="btnRegister" class="btn-primary">Daftar</button>
+
+        <div class="auth-footer">
+          <a href="login.html" class="auth-link">Sudah punya akun? Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initConfig();
+    });
+
+    async function handleRegister(e) {
+      e.preventDefault();
+      const username = document.getElementById('regUsername').value.trim();
+      const fullName = document.getElementById('regFullName').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const rePassword = document.getElementById('regRePassword').value;
+      const role = document.getElementById('regRole').value;
+
+      if (!username || !fullName || !password || !rePassword) {
+        showToast('Username, Full Name, Password & Re-Password harus diisi', 'warning');
+        return;
+      }
+
+      if (password !== rePassword) {
+        showToast('Password dan Re-Password tidak cocok.', 'warning');
+        return;
+      }
+
+      const btn = document.getElementById('btnRegister');
+      btn.disabled = true;
+      btn.innerText = 'Mendaftar...';
+
+      const res = await apiCall('/api/v1/auth/register', 'POST', {
+        username,
+        fullName,
+        password,
+        rePassword,
+        role
+      });
+
+      btn.disabled = false;
+      btn.innerText = 'Daftar';
+
+      if (!res.ok) {
+        showToast(res.message || 'Gagal mendaftar.', 'error');
+        return;
+      }
+
+      showToast('Registrasi berhasil! Silakan login.', 'success');
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

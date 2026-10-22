@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeeMart - Point of Sale (POS)</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="main-header">
+    <div class="header-brand">BeeMart</div>
+    <div class="header-user-info">
+      <span id="headerClockSession" class="header-clock-session">Memuat sesi...</span>
+      <button class="btn-logout" onclick="handleLogout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-container">
+    <div class="content-card">
+      <!-- Tabs Navigation -->
+      <div class="tab-navigation">
+        <button id="tabNewTrx" class="tab-btn active" onclick="switchTab('newTrx')">New Transaction</button>
+        <button id="tabHistory" class="tab-btn" onclick="switchTab('history')">History Transaction</button>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- TAB 1: NEW TRANSACTION                    -->
+      <!-- ========================================== -->
+      <section id="sectionNewTransaction">
+        <!-- Invoice Number Box -->
+        <div class="invoice-banner">
+          Invoice No: <input type="text" id="invoiceNoInput" readonly value="Memuat...">
+        </div>
+
+        <!-- Product Search Box -->
+        <div class="search-box-wrapper">
+          <label class="form-label" for="productSearchInput">Cari Barang (Ketik: Apel / Susu, lalu tekan Enter)</label>
+          <div class="search-input-group">
+            <input type="text" id="productSearchInput" class="form-input" placeholder="Ketik nama barang...">
+            <button class="btn-select" style="padding: 8px 16px; font-size: 13px;" onclick="searchProducts()">Cari</button>
+          </div>
+        </div>
+
+        <!-- Search Results Table (Appears on Search) -->
+        <div id="searchResultsContainer" class="table-responsive" style="display: none; margin-bottom: 18px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Nama Barang</th>
+                <th>Berat</th>
+                <th>Stock</th>
+                <th>Harga</th>
+                <th>Diskon</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="searchResultsBody"></tbody>
+          </table>
+        </div>
+
+        <!-- Kotak Dialog: Barang Terpilih -->
+        <div id="selectionDialogBox" class="selection-box" style="display: none;">
+          <div class="selection-title">Barang Terpilih: <span id="dialogProductName">-</span></div>
+          <div class="selection-row">
+            <div class="selection-info">Harga Satuan: <strong id="dialogProductPrice">Rp 0</strong></div>
+            <div class="selection-info">Sisa Stock: <strong id="dialogProductStock">0</strong></div>
+            <div class="qty-input-group">
+              <label class="form-label" for="dialogQtyInput" style="margin: 0;">Qty:</label>
+              <input type="number" id="dialogQtyInput" class="qty-input" min="1" value="1">
+            </div>
+            <button class="btn-add-cart" onclick="addSelectedProductToCart()">Masukkan ke Keranjang</button>
+          </div>
+        </div>
+
+        <!-- Daftar Belanjaan (Cart) -->
+        <h3 class="section-subtitle">Daftar Belanjaan</h3>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Nama Barang</th>
+                <th>Harga</th>
+                <th>Diskon</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="cartTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Cart Footer (Total, Payment Method, Submit) -->
+        <div class="cart-footer">
+          <div id="totalDisplay" class="total-display">Total: Rp 0</div>
+          
+          <div class="payment-row">
+            <label class="payment-label" for="paymentMethodSelect">Metode Pembayaran:</label>
+            <select id="paymentMethodSelect" class="form-select" style="width: 140px;">
+              <!-- Dynamically populated from API -->
+            </select>
+          </div>
+
+          <button id="btnSubmitTransaction" class="btn-submit-trx" onclick="submitTransaction(currentUser)">Submit Transaksi</button>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB 2: HISTORY TRANSACTION                 -->
+      <!-- ========================================== -->
+      <section id="sectionHistory" style="display: none;">
+        <div id="historySubtitle" class="history-header-title">
+          Pencarian Data Transaksi
+        </div>
+
+        <!-- Date Filter Row -->
+        <div class="date-filter-row" style="flex-wrap: wrap; gap: 8px;">
+          <label class="form-label" for="historyDateInput" style="margin: 0; font-weight: 600;">Pilih Tanggal:</label>
+          <input type="date" id="historyDateInput" class="form-input" style="width: 160px;">
+          <button class="btn-filter-date" onclick="loadHistory(1)">Cari Data</button>
+          <button class="btn-select" style="background:#e0f2fe; color:#0284c7; border:1px solid #7dd3fc;" onclick="setDateAndSearch('today')">Hari Ini</button>
+          <button class="btn-select" style="background:#e0f2fe; color:#0284c7; border:1px solid #7dd3fc;" onclick="setDateAndSearch('2026-09-04')">04/09/2026 (Mockup)</button>
+          <button class="btn-select" style="background:#e0f2fe; color:#0284c7; border:1px solid #7dd3fc;" onclick="setDateAndSearch('2026-09-03')">03/09/2026 (20 Data)</button>
+        </div>
+
+        <!-- History Table -->
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>No. Transaksi</th>
+                <th>Tanggal & Jam</th>
+                <th>Kasir</th>
+                <th>Jml Item</th>
+                <th>Pembayaran</th>
+                <th>Total Harga</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+              <tr>
+                <td colspan="6" class="empty-state">Pilih tanggal dan klik "Cari Data" untuk melihat riwayat transaksi.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div id="historyPagination" class="pagination-container">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/transaction.js"></script>
+  <script src="js/history.js"></script>
+  <script>
+    let currentUser = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initConfig();
+      currentUser = requireAuth();
+      if (!currentUser) return;
+
+      // Initialize New Transaction Tab
+      await initTransactionTab(currentUser);
+      initHistoryTab(currentUser);
+    });
+
+    function switchTab(tab) {
+      const btnNew = document.getElementById('tabNewTrx');
+      const btnHist = document.getElementById('tabHistory');
+      const secNew = document.getElementById('sectionNewTransaction');
+      const secHist = document.getElementById('sectionHistory');
+
+      if (tab === 'newTrx') {
+        btnNew.classList.add('active');
+        btnHist.classList.remove('active');
+        secNew.style.display = 'block';
+        secHist.style.display = 'none';
+      } else {
+        btnHist.classList.add('active');
+        btnNew.classList.remove('active');
+        secNew.style.display = 'none';
+        secHist.style.display = 'block';
+        initHistoryTab(currentUser);
+      }
+    }
+
+    function handleLogout() {
+      clearSession();
+      showToast('Anda telah logout.', 'info');
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 300);
+    }
+  </script>
+</body>
+</html>

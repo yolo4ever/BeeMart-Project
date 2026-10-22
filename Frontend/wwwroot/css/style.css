@@ -1,0 +1,589 @@
+/* ==========================================================================
+   BeeMart POS Web App - Custom Vanilla CSS (NO BOOTSTRAP)
+   Design System: Modern Blue Point of Sale
+   ========================================================================== */
+
+:root {
+  --primary-blue: #008be8;
+  --primary-hover: #0077c8;
+  --primary-dark: #005a9c;
+  --secondary-blue: #bbdefb;
+  --light-blue-bg: #eaf4fd;
+  --card-border: #99ccff;
+  --text-dark: #1e293b;
+  --text-muted: #64748b;
+  --danger-red: #ff473d;
+  --danger-hover: #e03229;
+  --success-green: #10b981;
+  --white: #ffffff;
+  --bg-gradient: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --box-shadow: 0 4px 16px rgba(0, 110, 200, 0.08);
+  --border-radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background: #f0f7ff;
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Auth Pages Layout (Login & Register)
+   ========================================================================== */
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #eaf3fc;
+  padding: 20px;
+}
+
+.auth-card {
+  background: var(--white);
+  width: 100%;
+  max-width: 440px;
+  border: 2px solid #6cb4f8;
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 24px rgba(0, 102, 204, 0.12);
+  padding: 32px 36px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.auth-title {
+  color: #0084e6;
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 14px;
+  color: var(--text-dark);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus, .form-select:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 139, 232, 0.2);
+}
+
+.btn-primary {
+  width: 100%;
+  background: #008be8;
+  color: var(--white);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 8px;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+}
+
+.auth-link {
+  color: #0084e6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Main App Header
+   ========================================================================== */
+.main-header {
+  background: #008be8;
+  color: var(--white);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-brand {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.header-user-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.header-clock-session {
+  color: #ffffff;
+}
+
+.btn-logout {
+  background: var(--danger-red);
+  color: var(--white);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-logout:hover {
+  background: var(--danger-hover);
+}
+
+/* ==========================================================================
+   Main Content Container
+   ========================================================================== */
+.main-container {
+  max-width: 1100px;
+  width: 95%;
+  margin: 24px auto 40px auto;
+  flex: 1;
+}
+
+.content-card {
+  background: var(--white);
+  border: 2px solid var(--card-border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 24px;
+  min-height: 540px;
+}
+
+/* ==========================================================================
+   Navigation Tabs
+   ========================================================================== */
+.tab-navigation {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 8px;
+}
+
+.tab-btn {
+  background: #bbdefb;
+  color: #0b5796;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px 6px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  background: #90caf9;
+}
+
+.tab-btn.active {
+  background: #008be8;
+  color: var(--white);
+}
+
+/* ==========================================================================
+   New Transaction Section
+   ========================================================================== */
+.invoice-banner {
+  background: #cfe8fc;
+  border: 1px solid #90caf9;
+  border-radius: 4px;
+  padding: 8px 14px;
+  color: #0b5796;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.invoice-banner input {
+  background: transparent;
+  border: none;
+  color: #0b5796;
+  font-weight: 700;
+  font-size: 14px;
+  margin-left: 6px;
+  outline: none;
+}
+
+.search-box-wrapper {
+  margin-bottom: 16px;
+}
+
+.search-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.section-subtitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 18px 0 10px 0;
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+.table-responsive {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  background: var(--white);
+}
+
+.data-table th {
+  background: #bbdefb;
+  color: #02538c;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 12px;
+  border: 1px solid #90caf9;
+}
+
+.data-table td {
+  padding: 9px 12px;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.data-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.btn-select {
+  background: #1976d2;
+  color: var(--white);
+  border: none;
+  padding: 5px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-select:hover {
+  background: #1565c0;
+}
+
+.btn-delete {
+  background: var(--danger-red);
+  color: var(--white);
+  border: none;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background: var(--danger-hover);
+}
+
+/* ==========================================================================
+   Dialog / Selection Box (Kotak Dialog)
+   ========================================================================== */
+.selection-box {
+  background: #f1f8fe;
+  border: 1px solid #90caf9;
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin: 14px 0 18px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.selection-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #0066cc;
+}
+
+.selection-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.selection-info {
+  font-size: 13.5px;
+  color: #334155;
+}
+
+.selection-info strong {
+  color: #0f172a;
+}
+
+.qty-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qty-input {
+  width: 70px;
+  padding: 5px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.btn-add-cart {
+  background: #008be8;
+  color: var(--white);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-add-cart:hover {
+  background: var(--primary-hover);
+}
+
+/* ==========================================================================
+   Cart Footer & Total
+   ========================================================================== */
+.cart-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.total-display {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0077c8;
+}
+
+.payment-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.payment-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.btn-submit-trx {
+  width: 100%;
+  background: #008be8;
+  color: var(--white);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: background 0.2s;
+}
+
+.btn-submit-trx:hover {
+  background: var(--primary-hover);
+}
+
+/* ==========================================================================
+   History Section
+   ========================================================================== */
+.history-header-title {
+  color: #0077c8;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.date-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.btn-filter-date {
+  background: #008be8;
+  color: var(--white);
+  border: none;
+  padding: 7px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-filter-date:hover {
+  background: var(--primary-hover);
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.page-btn {
+  background: var(--white);
+  border: 1px solid #008be8;
+  color: #008be8;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.page-btn.active {
+  background: #008be8;
+  color: var(--white);
+}
+
+.page-btn:hover:not(.active) {
+  background: #e3f2fd;
+}
+
+/* ==========================================================================
+   Toast Notification System
+   ========================================================================== */
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  min-width: 300px;
+  max-width: 420px;
+  padding: 12px 18px;
+  border-radius: 6px;
+  color: var(--white);
+  font-size: 13.5px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: slideIn 0.3s ease-out;
+}
+
+.toast-success {
+  background: #10b981;
+}
+
+.toast-error {
+  background: #ef4444;
+}
+
+.toast-warning {
+  background: #f59e0b;
+}
+
+.toast-info {
+  background: #008be8;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px;
+  color: var(--text-muted);
+  font-style: italic;
+}
